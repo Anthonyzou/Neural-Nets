@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "brain.js": "1.6.1",
+    "chalk": "2.4.1",
+    "vorpal": "1.12.0"
+  }
+}
