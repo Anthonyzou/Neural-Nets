@@ -12,14 +12,14 @@ const net = new NeuralNetwork({
 });
 
 
-vorpal.command('rgb [rgb...]').action((args, cb) => {
+vorpal.command('rgb [rgb...]', 'Classify a new color').action((args, cb) => {
   const [r, g, b] = args.rgb;
   console.log(chalk.rgb(r, g, b).bgKeyword('white')('#####'));
   console.log(net.run(args.rgb));
   cb();
 });
 
-vorpal.command('train').action((args, cb) => {
+vorpal.command('train', 'Train a new neural net based of color file').action((args, cb) => {
   const trainingData = colors.map(({ b, g, r, label }) => ({
     input: [r / 255, g / 255, b / 255],
     output: { [label]: 1 },
@@ -29,11 +29,11 @@ vorpal.command('train').action((args, cb) => {
   cb();
 });
 
-vorpal.command('save').action((args, cb) => {
+vorpal.command('save', 'Save the neural net for later reuse').action((args, cb) => {
   fs.writeFile('./save.json', JSON.stringify(net.toJSON(), null, 2), cb);
 });
 
-vorpal.command('load').action((args, cb) => {
+vorpal.command('load', 'Load an exisiting neural net').action((args, cb) => {
   net.fromJSON(require('./save.json'));
   cb();
 });
