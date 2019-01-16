@@ -30,7 +30,7 @@ vorpal.command('train').action((args, cb) => {
 });
 
 vorpal.command('save').action((args, cb) => {
-  fs.writeFile('./save.json', JSON.stringify(net.toJSON()), cb);
+  fs.writeFile('./save.json', JSON.stringify(net.toJSON(), null, 2), cb);
 });
 
 vorpal.command('load').action((args, cb) => {
