@@ -3,10 +3,9 @@
     "start": "node --max-old-space-size=8000 ."
   },
   "dependencies": {
+    "@tensorflow/tfjs-node-gpu": "0.2.3",
     "brain.js": "1.6.1",
     "chalk": "2.4.1",
-    "csv-parser": "2.1.0",
-    "csv-split-stream": "1.0.2",
     "fs-extra": "7.0.1",
     "mathjs": "5.4.2",
     "progress": "2.0.3",

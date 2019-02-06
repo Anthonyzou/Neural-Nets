@@ -12,7 +12,9 @@ Type `help` for other commands you can use.
 
 # preprocessing
 
-`split -l 150000 train.csv train/`
+On Mac `split -l 150000 train.csv train/`
+
+On linux `split -d -l 150000 train.csv train/`
 
 # References
 

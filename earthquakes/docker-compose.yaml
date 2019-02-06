@@ -1,0 +1,11 @@
+version: '2.3'
+
+services:
+  app:
+    build: .
+    runtime: nvidia
+    volumes:
+      - .:/app
+    command: node test.js
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
