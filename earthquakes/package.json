@@ -3,6 +3,7 @@
     "start": "node --max-old-space-size=8000 ."
   },
   "dependencies": {
+    "@tensorflow/tfjs-node": "0.2.3",
     "@tensorflow/tfjs-node-gpu": "0.2.3",
     "brain.js": "1.6.1",
     "chalk": "2.4.1",

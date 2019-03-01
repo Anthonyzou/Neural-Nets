@@ -1,21 +1,65 @@
-const brain = require('brain.js');
 const fs = require('fs-extra');
 const _ = require('lodash');
-const math = require('mathjs');
-var ProgressBar = require('progress');
-
+const ProgressBar = require('progress');
+const tf = require('@tensorflow/tfjs-node');
 
 const vorpal = require('vorpal')();
 
-const net = new brain.recurrent.LSTMTimeStep({
-  outputSize: 1,
-  hiddenLayers: [2, 1],
-  learningRate: 0.6
+let model = tf.sequential();
+model.add(tf.layers.lstm({
+  inputShape: [null, 1],
+  units: 1,
+  activation: 'sigmoid',
+  returnSequences: true
+}));
+model.add(tf.layers.dense({
+  units:1,
+}));
+
+
+//compile
+const sgdoptimizer = tf.train.sgd(0.1);
+model.compile({
+  optimizer: sgdoptimizer,
+  loss: tf.losses.meanSquaredError,
 });
 
-vorpal.command('quake', 'Classify').action(async (args, cb) => {
+vorpal.command('train', '').action(async (args, cb) => {
+  const results = _(await fs.readFile('train/aa', { encoding: 'UTF8' }))
+    .split('\n')
+    .map(line => {
+      // skip any empty lines
+      if (line === '') {
+        return null;
+      }
+      let [a, b] = line.split(',');
+      a = parseFloat(a);
+      b = parseFloat(b);
+      if (a == NaN || b == NaN) {
+        return null;
+      }
+      return [a, b];
+    })
+    .filter(a => a)
+    .chunk(1000)
+    .value();
+    for(var chunk of results){
+      const [a,b] = _.unzip(chunk);
+      const aa = tf.tensor(a, [ 1000,1, 1])
+      aa.print()
+      const bb = tf.tensor(b, [1000, 1])
+      await model.fit(aa, bb)
+    }
+
+
+  cb();
+});
+
+vorpal.command('predict', 'Classify').action(async (args, cb) => {
   const files = await fs.readdir('test');
-  const bar = new ProgressBar(':bar :percent :eta :elapsed :rate', { total: files.length });
+  const bar = new ProgressBar(':bar :percent :eta :elapsed :rate', {
+    total: files.length,
+  });
 
   let result = await Promise.all(
     files.map(async path => {
@@ -26,10 +70,10 @@ vorpal.command('quake', 'Classify').action(async (args, cb) => {
         .map(parseFloat)
         .filter(_.isNumber)
         .chunk(1000)
-        .map(chunk => net.run(chunk))
+        .map(chunk => model.predict(tf.tensor1d(chunk)))
         .filter(a => a)
         .mean();
-      bar.tick()
+      bar.tick();
       return [path, mean];
     })
   );
@@ -41,38 +85,6 @@ vorpal.command('quake', 'Classify').action(async (args, cb) => {
       })
       .join('\n');
   await fs.writeFile('submission.csv', result);
-  cb()
-});
-
-vorpal.command('train', '').action(async (args, cb) => {
-  const files  = await fs.readdir('train');
-  const bar = new ProgressBar(':bar :percent :eta :elapsed :rate', { total: files.length });
-
-  for(file of files){
-    bar.tick();
-
-    const results = _(await fs.readFile('train/'+file, { encoding: 'UTF8' }))
-      .split('\n')
-      .map(line => {
-
-        let [a, b] = line.split(',');
-        // skip any empty lines
-        if (line === '' || line === undefined) {
-          return null;
-        }
-        a = parseFloat(a);
-        b = parseFloat(b);
-        if(_.isNaN(a) && _.isNaN(b)){
-          return null;
-        }
-        return [a, b];
-
-      })
-      .filter(_.isArray)
-      .value();
-    net.train(results);
-    save();
-  }
   cb();
 });
 
@@ -82,12 +94,12 @@ const save = async () => {
 vorpal
   .command('save', 'Save the neural net for later reuse')
   .action(async (args, cb) => {
-    await save()
+    await model.save(`file://${__dirname}/model`);
     cb();
   });
 
-vorpal.command('load', 'Load an exisiting neural net').action((args, cb) => {
-  net.fromJSON(require('./save.json'));
+vorpal.command('load', 'Load an exisiting neural net').action(async (args, cb) => {
+  model = await tf.loadModel(`file:///${__dirname}/model/save.json`);
   cb();
 });
 
