@@ -6,7 +6,7 @@ const _ = require('lodash');
 const vorpal = require('vorpal')();
 
 const net = new brain.recurrent.LSTMTimeStep({
-  hiddenLayers: [128,64]
+  hiddenLayers: [12,6]
 
 });
 
