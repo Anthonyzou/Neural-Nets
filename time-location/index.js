@@ -6,14 +6,37 @@ const moment = require('moment');
 
 const vorpal = require('vorpal')();
 
-const net = new brain.recurrent.LSTMTimeStep({
-  hiddenLayers: [4,2]
-
+const net = new brain.NeuralNetwork({
+  hiddenLayers: [128,64],
 });
 
-vorpal.command('quake', 'Classify').action(async (args, cb) => {
-  net.run(chunk)
-  cb()
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
+}
+
+vorpal.command('predict', 'Classify').action(async (args, cb) => {
+  const mmtMidnight = moment().startOf('day');
+  const diffMinutes = time.diff(mmtMidnight, 'minutes');
+  [world, place] = net.run(diffMinutes)
+  switch(round(place, 1)){
+    case 0.1:
+      place = 'p'
+      break;
+    case 0.2:
+      place = 'w'
+      break;
+    case 0.3:
+      place = 'i'
+      break;
+    case 0.4:
+      place = 'm'
+      break;
+    case 0.5:
+      place = 's'
+      break;
+  }
+  cb([world * 141, place])
 });
 
 vorpal.command('train', '').action(async (args, cb) => {
@@ -35,21 +58,21 @@ vorpal.command('train', '').action(async (args, cb) => {
       const world = parseInt(m)
       let place;
       if(m.includes('p')){
-        place = 1
+        place = 0.1
       }
       if(m.includes('w')){
-        place = 2
+        place = 0.2
       }
       if(m.includes('i')){
-        place = 3
+        place = 0.3
       }
       if(m.includes('m')){
-        place = 4
+        place = 0.4
       }
       if(m.includes('s')){
-        place = 5
+        place = 0.5
       }
-      return {time: diffMinutes, world, place}
+      return {time: diffMinutes / 1440, world: world / 141, place}
     })
     .filter(({place, world}) => {
       return (_.isNumber(place)
@@ -60,7 +83,7 @@ vorpal.command('train', '').action(async (args, cb) => {
         && !_.isUndefined(world))
     })
     .map(({time, world, place}) => {
-      return {input: [time], output: [world, place]}
+      return {input: time, output: [world, place]}
     })
     .value();
   await fs.writeFile('./thing.json', JSON.stringify(results, null, 2))
