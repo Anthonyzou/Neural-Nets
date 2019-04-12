@@ -1,43 +1,18 @@
 const brain = require('brain.js');
 const fs = require('fs-extra');
 const _ = require('lodash');
+const moment = require('moment');
 
 
 const vorpal = require('vorpal')();
 
 const net = new brain.recurrent.LSTMTimeStep({
-  hiddenLayers: [12,6]
+  hiddenLayers: [4,2]
 
 });
 
 vorpal.command('quake', 'Classify').action(async (args, cb) => {
-  const files = await fs.readdir('test');
-  const bar = new ProgressBar(':bar :percent :eta :elapsed :rate', { total: files.length });
-
-  let result = await Promise.all(
-    files.map(async path => {
-      const file = await fs.readFile('test/' + path);
-      const mean = _(file)
-        .split('\n')
-        .drop(1)
-        .map(parseFloat)
-        .filter(_.isNumber)
-        .chunk(1000)
-        .map(chunk => net.run(chunk))
-        .filter(a => a)
-        .mean();
-      bar.tick()
-      return [path, mean];
-    })
-  );
-  result =
-    'seg_id,time_to_failure\n' +
-    result
-      .map(([path, mean]) => {
-        return path.replace('.csv', '') + ',' + mean;
-      })
-      .join('\n');
-  await fs.writeFile('submission.csv', result);
+  net.run(chunk)
   cb()
 });
 
@@ -50,15 +25,17 @@ vorpal.command('train', '').action(async (args, cb) => {
   results = _.chain(results)
     .filter(({t,m}) => {
       const world = parseInt(m);
-      return (m.length < 5 && !m.includes('d') && !m.includes('s') && !_.isNaN(world))
+      return (m.length < 5 && !m.includes('d') && !_.isNaN(world))
     })
     .map(({t,m}) => {
-      var time = new Date(t)
-      time.setMinutes(0, 0, 0)
+      var time = moment(t)
+      var mmtMidnight = time.clone().startOf('day');
+      var diffMinutes = time.diff(mmtMidnight, 'minutes');
+
       const world = parseInt(m)
       let place;
       if(m.includes('p')){
-          place = 1
+        place = 1
       }
       if(m.includes('w')){
         place = 2
@@ -69,7 +46,10 @@ vorpal.command('train', '').action(async (args, cb) => {
       if(m.includes('m')){
         place = 4
       }
-      return {time: time.getTime() / 100000, world, place}
+      if(m.includes('s')){
+        place = 5
+      }
+      return {time: diffMinutes, world, place}
     })
     .filter(({place, world}) => {
       return (_.isNumber(place)
@@ -80,10 +60,10 @@ vorpal.command('train', '').action(async (args, cb) => {
         && !_.isUndefined(world))
     })
     .map(({time, world, place}) => {
-      return {input: [time, world, place], output: [world, place]}
+      return {input: [time], output: [world, place]}
     })
     .value();
-  // await fs.writeFile('./thing.json', JSON.stringify(results, null, 2))
+  await fs.writeFile('./thing.json', JSON.stringify(results, null, 2))
   net.train(results);
   cb();
 });
