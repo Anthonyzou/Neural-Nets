@@ -20,6 +20,6 @@
     "typescript": "3.5.3"
   },
   "resolutions": {
-    "**/lodash": "4.17.13"
+    "**/lodash": "^4.17.14"
   }
 }

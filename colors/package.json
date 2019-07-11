@@ -12,6 +12,6 @@
     "@types/vorpal": "1.11.0"
   },
   "resolutions": {
-    "**/lodash": "4.17.13"
+    "**/lodash": "^4.17.14"
   }
 }
