@@ -3,9 +3,9 @@
     "start": "node ."
   },
   "dependencies": {
-    "brain.js": "1.6.1",
-    "chalk": "2.4.2",
-    "fs-extra": "^8.1.0",
+    "brain.js": "2.0.0-alpha.12",
+    "chalk": "3.0.0",
+    "fs-extra": "^9.0.0",
     "moment": "^2.24.0",
     "vorpal": "1.12.0"
   },
