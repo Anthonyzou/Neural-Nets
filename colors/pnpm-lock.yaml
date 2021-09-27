@@ -4,23 +4,23 @@ overrides:
   '**/lodash': ^4.17.14
 
 specifiers:
-  '@types/vorpal': 1.12.0
-  brain.js: 2.0.0-alpha.12
-  chalk: 3.0.0
+  '@types/vorpal': 1.12.2
+  brain.js: 2.0.0-beta.3
+  chalk: 4.1.2
   vorpal: 1.12.0
 
 dependencies:
-  brain.js: 2.0.0-alpha.12
-  chalk: 3.0.0
+  brain.js: 2.0.0-beta.3
+  chalk: 4.1.2
   vorpal: 1.12.0
 
 devDependencies:
-  '@types/vorpal': 1.12.0
+  '@types/vorpal': 1.12.2
 
 packages:
 
-  /@types/vorpal/1.12.0:
-    resolution: {integrity: sha512-QJpUBEnDySb2W58KpO0d51pedxFzKQS9AmeSIryIZUpYTpucXAHzGQWbaQWoQvfqX8dKyqkcBgdNQNv3FakB3w==}
+  /@types/vorpal/1.12.2:
+    resolution: {integrity: sha512-y9Ydpp4K9k+gGKFFmpnYNXJxhaq7smglPMcF2wymMaEbPhMS2gHkkD9OMoaqhktJErI+VeHG1ciy1JNz1nhOTQ==}
     dev: true
 
   /abbrev/1.1.1:
@@ -152,8 +152,9 @@ packages:
       concat-map: 0.0.1
     dev: false
 
-  /brain.js/2.0.0-alpha.12:
-    resolution: {integrity: sha512-/GS9GU/I7ype1nw+7CiC1VlWQT5PCzwIH2Fcp9jEAkwCSAjjnfh3NhPMFePW6sN3jF0iUYK/eLuyO22v0bbvrQ==}
+  /brain.js/2.0.0-beta.3:
+    resolution: {integrity: sha512-WTDMuOwqgoO/luCFoLbjxz16U7sBGHoAbHSdscHUyRAbxFPw8Fva8dMAvdRdNs4BdLv+egUmBNDyG5J9FHBhrg==}
+    engines: {node: '>=8.6.x'}
     dependencies:
       gpu.js: 2.11.4
       thaw.js: 2.1.4
@@ -181,9 +182,9 @@ packages:
       supports-color: 2.0.0
     dev: false
 
-  /chalk/3.0.0:
-    resolution: {integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==}
-    engines: {node: '>=8'}
+  /chalk/4.1.2:
+    resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
+    engines: {node: '>=10'}
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0

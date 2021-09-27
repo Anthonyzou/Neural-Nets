@@ -4,36 +4,27 @@ overrides:
   '**/lodash': ^4.17.14
 
 specifiers:
-  '@types/chalk': 2.2.0
-  '@types/vorpal': 1.11.0
-  brain.js: 2.0.0-alpha.12
-  chalk: 3.0.0
-  fs-extra: ^9.1.0
+  '@types/vorpal': 1.12.2
+  brain.js: 2.0.0-beta.3
+  chalk: 4.1.2
+  fs-extra: ^10.0.0
   moment: ^2.29.1
   vorpal: 1.12.0
 
 dependencies:
-  brain.js: 2.0.0-alpha.12
-  chalk: 3.0.0
-  fs-extra: 9.1.0
+  brain.js: 2.0.0-beta.3
+  chalk: 4.1.2
+  fs-extra: 10.0.0
   moment: 2.29.1
   vorpal: 1.12.0
 
 devDependencies:
-  '@types/chalk': 2.2.0
-  '@types/vorpal': 1.11.0
+  '@types/vorpal': 1.12.2
 
 packages:
 
-  /@types/chalk/2.2.0:
-    resolution: {integrity: sha512-1zzPV9FDe1I/WHhRkf9SNgqtRJWZqrBWgu7JGveuHmmyR9CnAPCie2N/x+iHrgnpYBIcCJWHBoMRv2TRWktsvw==}
-    deprecated: This is a stub types definition for chalk (https://github.com/chalk/chalk). chalk provides its own type definitions, so you don't need @types/chalk installed!
-    dependencies:
-      chalk: 3.0.0
-    dev: true
-
-  /@types/vorpal/1.11.0:
-    resolution: {integrity: sha512-gsPnt1APkEBk0kLYJYa5HFWblVOhj43L4krLVN+vNmVIjVLWiXa9N1JmsErcRbRmBjzsJbKpSM6dXsEHG/YZ/w==}
+  /@types/vorpal/1.12.2:
+    resolution: {integrity: sha512-y9Ydpp4K9k+gGKFFmpnYNXJxhaq7smglPMcF2wymMaEbPhMS2gHkkD9OMoaqhktJErI+VeHG1ciy1JNz1nhOTQ==}
     dev: true
 
   /abbrev/1.1.1:
@@ -75,6 +66,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       color-convert: 2.0.1
+    dev: false
 
   /aproba/1.2.0:
     resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==}
@@ -100,11 +92,6 @@ packages:
 
   /asynckit/0.4.0:
     resolution: {integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=}
-    dev: false
-
-  /at-least-node/1.0.0:
-    resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
-    engines: {node: '>= 4.0.0'}
     dev: false
 
   /aws-sign2/0.7.0:
@@ -169,8 +156,9 @@ packages:
       concat-map: 0.0.1
     dev: false
 
-  /brain.js/2.0.0-alpha.12:
-    resolution: {integrity: sha512-/GS9GU/I7ype1nw+7CiC1VlWQT5PCzwIH2Fcp9jEAkwCSAjjnfh3NhPMFePW6sN3jF0iUYK/eLuyO22v0bbvrQ==}
+  /brain.js/2.0.0-beta.3:
+    resolution: {integrity: sha512-WTDMuOwqgoO/luCFoLbjxz16U7sBGHoAbHSdscHUyRAbxFPw8Fva8dMAvdRdNs4BdLv+egUmBNDyG5J9FHBhrg==}
+    engines: {node: '>=8.6.x'}
     dependencies:
       gpu.js: 2.11.4
       thaw.js: 2.1.4
@@ -198,12 +186,13 @@ packages:
       supports-color: 2.0.0
     dev: false
 
-  /chalk/3.0.0:
-    resolution: {integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==}
-    engines: {node: '>=8'}
+  /chalk/4.1.2:
+    resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
+    engines: {node: '>=10'}
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: false
 
   /chownr/1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
@@ -235,9 +224,11 @@ packages:
     engines: {node: '>=7.0.0'}
     dependencies:
       color-name: 1.1.4
+    dev: false
 
   /color-name/1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+    dev: false
 
   /combined-stream/1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -381,11 +372,10 @@ packages:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
     dev: false
 
-  /fs-extra/9.1.0:
-    resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
-    engines: {node: '>=10'}
+  /fs-extra/10.0.0:
+    resolution: {integrity: sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==}
+    engines: {node: '>=12'}
     dependencies:
-      at-least-node: 1.0.0
       graceful-fs: 4.2.8
       jsonfile: 6.1.0
       universalify: 2.0.0
@@ -506,6 +496,7 @@ packages:
   /has-flag/4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+    dev: false
 
   /has-unicode/2.0.1:
     resolution: {integrity: sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=}
@@ -1059,6 +1050,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       has-flag: 4.0.0
+    dev: false
 
   /tar-fs/2.1.1:
     resolution: {integrity: sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==}
